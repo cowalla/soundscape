@@ -14,8 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
+from django.contrib.auth import views as auth_views
 from django.contrib import admin
 
+from soundscape import views as soundscape_views
+admin.autodiscover()
+
 urlpatterns = [
+    url(r'^$', soundscape_views.home, name='home'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
+    url(r'^accounts/logout/$', auth_views.logout, name='logout'),
+    url(r'^accounts/profile/$', soundscape_views.accounts_profile, name='accounts_profile'),
 ]
