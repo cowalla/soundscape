@@ -14,7 +14,6 @@ Clone this repo. Then,
  Now run the service: `python manage.py runserver 0.0.0.0:4000` and you can access the project at `localhost:4000`.
 
 
-
 ### Contributing
 
  - Make a new branch when contributing to this repository.

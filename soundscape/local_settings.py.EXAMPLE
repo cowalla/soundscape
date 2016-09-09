@@ -1,0 +1,4 @@
+# Make a copy of this file to local_settings.py
+# This is where you put system configurations that are sensitive to your computer or that shouldn't be
+# shared with the world. Things like database passwords for real-world systems.
+# e.g. REDIS_URL = 'https://example.com:1337'
