@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if streams %}
+
+<ul>
+    {% for stream in streams %}
+    <li>
+        <a id="{{ stream.user.username }}" href="
+        {% url 'stream_user' stream.user.username %}">
+            {{ stream.user.username }}'s Stream
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% else %}
+
+No Streams are available.
+
+{% endif %}
+
+
+{% if logged_in %}
+<h2>Create Stream</h2>
+<form action="{% url 'create_stream' %}" method="post">
+    {{ form }}
+    {% csrf_token %}
+    <input type="submit" class="primary" value="Create Stream">
+</form>
+
+{% endif %}
+
+{% endblock %}

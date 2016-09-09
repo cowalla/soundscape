@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^accounts/login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^accounts/logout/$', auth_views.logout, name='logout'),
     url(r'^accounts/profile/$', soundscape_views.accounts_profile, name='accounts_profile'),
+    url(r'^streams/', include('soundscape.streams.urls')),
 ]

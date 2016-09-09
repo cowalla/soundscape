@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+<head>
+</head>
+
+{% block content %}
+
+<h1>{{ stream }}: {{ sent_at }}</h1>
+<iframe width="100%" height="450" scrolling="no" frameborder="no" src="{{ stream.src }}"></iframe>
+
+{% endblock %}
