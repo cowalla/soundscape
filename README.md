@@ -13,11 +13,14 @@ Clone this repo. Then,
  
  Now run the service: `python manage.py runserver 0.0.0.0:4000` and you can access the project at `localhost:4000`.
 
- ### Contributing
+
+
+### Contributing
 
  - Make a new branch when contributing to this repository.
  - Make pull requests
  - When committing to master, merge your branch in to master with a command like,
+
  **`git merge --ff-only --squash my-branch`
  **`git commit` (remove all the excess stuff in the commit message and replace it with something useful,
  e.g. add Redis client
