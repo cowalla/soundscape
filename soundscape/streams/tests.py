@@ -73,7 +73,7 @@ class StreamsRedisUtilsTestCase(TestCase):
 
         redis_utils.delete_user_info(self.test_username)
         self.assertRaises(
-            redis_utils.RedisException,
+            redis_utils.RedisGetTransactionFailure,
             redis_utils.get_user_info,
             self.test_username
         )

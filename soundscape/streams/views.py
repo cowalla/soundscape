@@ -1,5 +1,3 @@
-import time
-
 from django import http
 from django.core.urlresolvers import reverse
 from django.template.response import TemplateResponse
@@ -7,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 
 from soundscape.streams.models import Stream
 from soundscape.streams.forms import StreamCreateForm
+from soundscape.streams import redis_utils
 
 
 def index(request):
@@ -40,7 +39,7 @@ def stream(request, username):
         'streams/stream.html',
         {
             'stream': {'username': username, 'src': example_src},
-            'sent_at_ms': int(time.time() * 1000),
+            'sent_at_ms': redis_utils.current_time(),
         }
     )
 
@@ -51,12 +50,9 @@ def create_stream(request):
     if not form.is_valid() or not request.user.is_authenticated():
         raise http.Http404()
 
-    src = form.cleaned_data['src']
-    title = form.cleaned_data['title']
-
     try:
         Stream.objects.get(user=request.user)
     except Stream.DoesNotExist:
-        Stream.create(user=request.user, src=src, title=title)
+        Stream.create(user=request.user)
 
     return http.HttpResponseRedirect(reverse('streams_index'))
