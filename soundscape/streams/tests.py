@@ -43,6 +43,7 @@ class StreamsTestCase(TestCase):
         # will raise ObjectDoesNotExist if Stream wasn't created
         self.test_user.stream.delete()
 
+
 class StreamsRedisUtilsTestCase(TestCase):
     def setUp(self):
         #TODO: Make a test redis server
@@ -53,7 +54,7 @@ class StreamsRedisUtilsTestCase(TestCase):
         self.example_data = {
             'title': 'test_title',
             'src': 'test_src',
-            'time': int(time.time()*1000),
+            'time': redis_utils.current_time(),
             'position': 1000,
         }
 

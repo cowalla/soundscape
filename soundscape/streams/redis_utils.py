@@ -52,7 +52,7 @@ def set_user_info(username, dictionary):
 
     response, delay = save_batch(_batch)
 
-    return response
+    return response, delay
 
 
 def delete_user_info(username):

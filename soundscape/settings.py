@@ -101,6 +101,16 @@ def system_local_settings(name):
 REDIS_URL = system_local_settings('REDIS_URL')
 REDIS_CLIENT = Redis.from_url(REDIS_URL)
 
+import soundcloud
+
+SOUNDCLOUD_CLIENT_ID = system_local_settings('SOUNDCLOUD_CLIENT_ID')
+SOUNDCLOUD_SECRET = system_local_settings('SOUNDCLOUD_SECRET')
+SOUNDCLOUD_CLIENT = soundcloud.Client(
+    client_id=SOUNDCLOUD_CLIENT_ID,
+    client_secret=SOUNDCLOUD_SECRET
+)
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
