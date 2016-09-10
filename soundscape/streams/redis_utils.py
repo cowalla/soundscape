@@ -116,9 +116,10 @@ def get_batch(list_of_items):
 def _validate_result(batch, request_type):
     if not all(batch):
         if request_type == 'GET':
-            raise RedisGetTransactionFailure(
-                'Some entries were not retrieved from Redis. Batch: `{}`'.format(str(batch))
-            )
+            print 'WARNING: Some entries retrieved from Redis are blank. Batch: `{}`'.format(str(batch))
+
+            if None in batch:
+                raise RedisGetTransactionFailure('Data missing from Redis entry.')
         elif request_type == 'SET':
             raise RedisSetTransactionFailure(
                 'Some entries were not set to Redis. Batch: `{}`'.format(str(batch))

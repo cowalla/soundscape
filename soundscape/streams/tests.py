@@ -6,14 +6,12 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from soundscape.streams import redis_utils, views as stream_views
-from soundscape.streams.forms import StreamCreateForm
 
 
 class StreamsTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.stream_form_data = {'src': 'http://example.com', 'title': 'example title'}
-        self.valid_form = StreamCreateForm(self.stream_form_data)
         self.user_credentials = {'username': 'test_user', 'password': 'password'}
         self.test_user = User.objects.create(
             username=self.user_credentials['username'],
@@ -28,9 +26,6 @@ class StreamsTestCase(TestCase):
         )
 
         self.assertTrue(self.test_user.is_authenticated())
-
-    def test_stream_form(self):
-        self.assertTrue(self.valid_form.is_valid())
 
     def test_create_stream(self):
         self._login_test_user()

@@ -23,13 +23,9 @@ class Stream(models.Model):
     @classmethod
     def create(cls, user):
         stream = cls.objects.create(user=user)
-
-        try:
-            redis_utils.get_user_info(username=user.username)
-        except redis_utils.RedisGetTransactionFailure:
-                redis_utils.set_user_info(
-                    username=user.username,
-                    dictionary=BLANK_STREAM_DATA
-                )
+        redis_utils.set_user_info(
+            username=user.username,
+            dictionary=BLANK_STREAM_DATA
+        )
 
         return stream
