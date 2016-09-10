@@ -16,3 +16,5 @@
 .Python
 db.sqlite3
 pip-selfcheck.json
+soundscape/local_settings.py
+dump.rdb

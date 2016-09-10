@@ -16,7 +16,7 @@
               <li><a href="{% url 'streams_index' %}">Streams</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="{% url 'stream_user' user.pk %}">My Stream<span class="sr-only">(current)</span></a></li>
+              <li><a href="{% url 'stream_user' user.username %}">My Stream<span class="sr-only">(current)</span></a></li>
               {% if user.is_authenticated %}
                   <li>
                       <a href="#">

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from redis import Redis
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
@@ -84,6 +85,21 @@ DATABASES = {
     }
 }
 
+#Make sure you make a local_settings.py alongside your settings.py
+import local_settings
+
+def system_local_settings(name):
+    setting = getattr(local_settings, name)
+
+    if not setting:
+        raise ImportError(
+            'Please configure a setting for "{}" in local settings'.format(name)
+        )
+
+    return setting
+
+REDIS_URL = system_local_settings('REDIS_URL')
+REDIS_CLIENT = Redis.from_url(REDIS_URL)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
