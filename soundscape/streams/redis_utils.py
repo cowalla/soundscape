@@ -23,36 +23,47 @@ def time_it(f):
 
 
 def get_user_info(username):
-    # TODO: Investigate time delay difference in getting four entries instead of getting one entry,
-    # TODO: and deserializing it.
+    """
+    Given a username, grab appropriate tags from Redis server and form them into a dict.
+
+    returns {
+      'time': time when the master client's position was measured
+      'position': song position at measuring `time`.
+      'src': the iframe src attribute
+      'title': the title of the song
+    }
+    """
     stream_batch = [
         title_label(username),
         src_label(username),
         time_label(username),
         position_label(username),
     ]
-
     data, delay = get_batch(stream_batch)
 
     return user_data_dict_from_record(data)
 
 
 def set_user_info(username, dictionary):
-    # TODO: Investigate time delay difference in setting four entries instead of getting one entry,
-    # TODO: and deserializing it.
+    """
+    Given a username and dictionary, labels data in `dictionary` and stores entries as keys in Redis server.
 
-    offset = 4 * REDIS_SAVE_TIME
-
+    dictionary should look like: {
+      'time': time when the master client's position was measured
+      'position': song position at measuring `time`.
+      'src': the iframe src attribute
+      'title': the title of the song
+    }
+    """
     _batch = {
         title_label(username): dictionary['title'],
         src_label(username): dictionary['src'],
-        time_label(username): dictionary['time'] + offset,
-        position_label(username): dictionary['position'] + offset,
+        time_label(username): dictionary['time'],
+        position_label(username): dictionary['position'],
     }
-
     response, delay = save_batch(_batch)
 
-    return response, delay
+    return response
 
 
 def delete_user_info(username):
@@ -182,9 +193,8 @@ def dict_from_label(dictionary):
 
 def user_data_dict_from_record(record):
     user_data = dict_from_label(record)
-
-    user_data['position'] = int(user_data['position']) + 4 * REDIS_GET_TIME
-    user_data['time'] = int(user_data['time']) + 4 * REDIS_GET_TIME
+    user_data['position'] = int(user_data['position'])
+    user_data['time'] = int(user_data['time'])
 
     return user_data
 

@@ -63,6 +63,19 @@ def create_stream(request):
     return http.HttpResponseRedirect(reverse('streams_index'))
 
 
+@never_cache
+@csrf_exempt
+@require_http_methods(['GET'])
+def get_stream_info(request, username):
+    master_client_data = redis_utils.get_user_info(username)
+    server_data = {'t': redis_utils.current_time()}
+    response_data = {
+        'client': master_client_data,
+        'server': server_data,
+    }
+
+    return http.HttpResponse(json.dumps(response_data))
+
 @csrf_exempt
 @never_cache
 @require_http_methods(['POST'])
