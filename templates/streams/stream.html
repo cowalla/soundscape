@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-<script src="{% static 'js/app.js' %}"></script>
+<script data-main="{% static 'js/app.js' %}" src="{% static 'js/require.js' %}"></script>
 <iframe width="100%" height="450" scrolling="no" frameborder="no" src="{{ stream.src }}"></iframe>
 {% endblock %}
