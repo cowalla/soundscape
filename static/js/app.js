@@ -1,19 +1,40 @@
 require(['jquery', 'soundcloud_widget'], function($){
     // SC is the SoundCloud widget toolbox.
-    const positionTag = 'getPosition';
-    var getStreamInfo = function (cb) {
-        return $.get('streams/users/coala/get_stream_info', cb)
-    };
-    var applyStreamInfo = function(position, time){
-        return function(streamInfoResponse) {
+    const positionTag = 'getPosition',
+        iFrameElement = document.querySelector('iframe'),
+        widget = SC.Widget(iFrameElement);
 
+    var ms = function(){
+        return Math.floor(performance.now())
+    };
+    var timeSince = function(perf){
+        return ms() - perf;
+    };
+
+    var getStreamInfo = function (callback) {
+        return $.get(
+            'get_stream_info',
+            callback
+        )
+    };
+
+    var applyStreamInfo = function(position, time){
+        return function(response) {
+            var data = JSON.parse(response),
+                masterTime = parseInt(data.client.time),
+                masterPosition = parseInt(data.client.position);
+
+            console.log(data);
+
+            if (!iFrameElement.src === data.client.src) {
+                iFrameElement.src = data.client.src
+            }
+
+            widget.seekTo(masterPosition + timeSince(masterTime))
         }
     };
 
     $(document).ready(function() {
-        var iFrameElement = document.querySelector('iframe');
-        var widget = SC.Widget(iFrameElement);
-
         var playLoop = function (callback) {
             return function () {widget.getPosition(callback)}
         };
@@ -28,7 +49,9 @@ require(['jquery', 'soundcloud_widget'], function($){
             var stream = JSON.parse(msg.data);
 
             if(stream.method === positionTag){
-                console.log(Math.floor(stream.value))
+                var position = Math.floor(stream.value);
+                var time = new Date().getTime();
+                getStreamInfo(applyStreamInfo(position, time));
             }
         });
     })
