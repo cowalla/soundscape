@@ -1,5 +1,8 @@
 .idea
 
+1./
+node_modules/
+
 *bin/
 !bin/gunicorn_start.bash
 !bin/soundscape.conf
@@ -17,4 +20,5 @@
 db.sqlite3
 pip-selfcheck.json
 soundscape/local_settings.py
+static/js/bundle.js
 dump.rdb
