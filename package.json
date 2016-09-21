@@ -1,7 +1,7 @@
 {
   "name": "soundscape-js",
   "version": "1.0.0",
-  "description": "### Getting Started (without a webserver)",
+  "description": "Javascript for Soundscape",
   "main": "index.js",
   "directories": {
     "man": "man"
@@ -24,6 +24,7 @@
     "babel-preset-react": "^6.11.1",
     "es6-promise": "^3.3.1",
     "jquery": "^3.1.0",
+    "ractive": "^0.7.3",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-soundcloud-widget": "^2.0.4",
