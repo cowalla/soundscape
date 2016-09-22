@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<div id="ractive-iframe">
+    {{#1 }}
+    <h1>True</h1>
+    {{ /if }}
+    <iframe src="{{ pageState.src }}"></iframe>
+    {{#if pageState.src }}
+        <iframe src="{{ pageState.src }}"></iframe>
+    {{else}}
+        <h1>loading...</h1>
+    {{/if}}
+</div>
+</html>

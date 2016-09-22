@@ -7,6 +7,10 @@ module.exports = {
         path: __dirname,
         filename: '/static/js/bundle.js'
     },
+    node: {
+      fs: "empty"
+    },
+    debug: true,
     watch: true,
     module: {
         loaders: [
@@ -17,7 +21,8 @@ module.exports = {
                 query: {
                     presets: ['es2015', 'react']
                 }
-            }
+            },
+            { test: /\.html$/, loader: 'ractive' }
         ]
     }
 };
