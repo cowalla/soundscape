@@ -17,17 +17,17 @@ var getStreamInfo = function(callback){
 
 var loadTemplate = function(response) {
     var streamData = JSON.parse(response);
-    var tmp = require('./ractiveSoundcloudWidget.html');
 
-    $.get( 'http://localhost:4000/static/js/ractiveSoundcloudWidget.html' ).then( function ( SCWidget ) {
+    $.get('http://localhost:4000/static/js/ractiveSoundcloudWidget.html', function(template){
         var ractive = new Ractive({
             el: '#iframe-container',
-            template: require('ractive!./ractiveSoundcloudWidget.html'),
-            data: {pageState: streamData.client}
+            template: template
             //lazy: true // only update when inputs blur
         });
-        ractive.set('pageState', streamData);
-    });
+        ractive.set('pageState', streamData)
+    })
+
+    //ractive.set('pageState', streamData);
 };
 
 getStreamInfo(loadTemplate);

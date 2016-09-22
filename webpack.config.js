@@ -22,7 +22,7 @@ module.exports = {
                     presets: ['es2015', 'react']
                 }
             },
-            { test: /\.html$/, loader: 'ractive' }
+            { test: /\.html$/, loader: "ractive" }
         ]
     }
 };

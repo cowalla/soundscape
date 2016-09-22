@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html>
 <div id="ractive-iframe">
-    {{#1 }}
-    <h1>True</h1>
-    {{ /if }}
-    <iframe src="{{ pageState.src }}"></iframe>
-    {{#if pageState.src }}
-        <iframe src="{{ pageState.src }}"></iframe>
+    <h1>{{ pageState.client.src }}</h1>
+
+    <label for="textarea">text:</label>
+    <input id="textarea" rows="4" cols="50" value="{{ pageState.client.src }}" placeholder="abc" />
+
+    <iframe src={{ pageState.client.src }}></iframe>
+    {{#if pageState.client.src }}
+        <iframe src={{ pageState.client.src }}></iframe>
     {{else}}
         <h1>loading...</h1>
     {{/if}}
 </div>
-</html>
