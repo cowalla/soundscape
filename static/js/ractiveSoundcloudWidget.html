@@ -4,7 +4,6 @@
     <label for="textarea">text:</label>
     <input id="textarea" rows="4" cols="50" value="{{ pageState.client.src }}" placeholder="abc" />
 
-    <iframe src={{ pageState.client.src }}></iframe>
     {{#if pageState.client.src }}
         <iframe src={{ pageState.client.src }}></iframe>
     {{else}}
