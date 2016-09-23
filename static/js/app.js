@@ -4,10 +4,10 @@ import $ from 'jquery'
 
 var ractive;
 var ms = function(){
-    return Math.floor(performance.now())
+    return Math.floor(performance.now() * 1000)
 };
 var timeSince = function(perf){
-    return ms() - perf;
+    return (new Date().getTime() - perf);
 };
 var getStreamInfo = function(callback){
     return $.get(
@@ -34,7 +34,7 @@ var loadTemplate = function(response){
                     clearInterval(window.playLoopID)
                 };
                 widget.bind(SC.Widget.Events.PLAY, function () {
-                    window.playLoopID = setInterval(playLoop(), 3000)
+                    window.playLoopID = setInterval(playLoop(), 4000)
                 });
                 widget.bind(SC.Widget.Events.PAUSE, pauseLoop);
 
@@ -45,9 +45,19 @@ var loadTemplate = function(response){
                     if (stream.method === 'getPosition') {
                         var position = Math.floor(stream.value);
                         var time = new Date().getTime();
-                        getStreamInfo(
+                        getStreamInfo(function(response){
+                            var data = JSON.parse(response),
+                                masterTime = parseInt(data.client.time),
+                                masterPosition = parseInt(data.client.position);
 
-                        );
+                            if (!ractive.src == data.client.src) {
+                                ractive.set('src', data.client.src)
+                            }
+                            console.log(masterTime);
+                            console.log(timeSince(masterTime));
+
+                            widget.seekTo(masterPosition + (time - masterTime))
+                        });
                     }
                 });
             }
@@ -60,17 +70,7 @@ var loadTemplate = function(response){
 var applyStreamInfo = function(position, time){
     return function(response) {
 
-        var data = JSON.parse(response),
-            masterTime = parseInt(data.client.time),
-            masterPosition = parseInt(data.client.position);
 
-        ractive.set('response', data);
-
-        if (!ractive.src == data.client.src) {
-            ractive.set('src', data.client.src)
-        }
-
-        ractive.widget.seekTo(masterPosition + timeSince(masterTime))
     }
 };
 
